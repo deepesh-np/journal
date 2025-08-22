@@ -7,6 +7,8 @@ const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
 const authRoute = require('./Routes/AuthRoute');
+const journalRoute = require('./Routes/JournalRoute');
+const { userVerification } = require('./middleware/AuthMiddleware');
 
 const url = process.env.MONGO_URL;
 main().catch((err) => console.log(err));
@@ -30,7 +32,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ['http://localhost:5134'],
+    origin: ['http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
@@ -38,10 +40,13 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use('/auth', authRoute);
+app.use('/journals', userVerification, journalRoute);
 
+const path = require('path');
 
 app.get('/', (req, res) => {
-  res.send('hello');
+  // res.send('hello');
+  res.redirect('http://localhost:5173/');
 });
 
 app.listen(PORT, () => {
