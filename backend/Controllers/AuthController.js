@@ -51,3 +51,27 @@ module.exports.Login = async (req, res, next) => {
     console.error(error);
   }
 }
+
+module.exports.Logout = async (req, res) => {
+  try {
+    // clear JWT cookie
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "strict",
+    });
+
+    // destroy session if exists
+    if (req.session) {
+      req.session.destroy(err => {
+        if (err) return res.status(500).json({ success: false, message: "Session not destroyed" });
+        res.clearCookie("sid"); // session cookie
+        return res.json({ success: true, message: "Logged out successfully" });
+      });
+    } else {
+      // no session, just return success
+      return res.json({ success: true, message: "Logged out successfully" });
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Logout failed" });
+  }
+};
