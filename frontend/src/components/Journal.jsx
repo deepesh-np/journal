@@ -7,6 +7,9 @@ import JournalTable from './JournalTbale';
 export default function Journal() {
   const [journals, setJournals] = useState([]);
 
+  const user = localStorage.getItem('user');
+  if (!user) return <Navigate to='/login' replace />;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
