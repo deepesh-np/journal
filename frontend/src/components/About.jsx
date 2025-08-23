@@ -3,7 +3,7 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className='container mx-auto p-6 max-w-4xl'>
+    <div className='container mx-auto p-6 max-w-4xl min-vh-100'>
       <h1 className='text-4xl font-bold mb-4'>About Us</h1>
       <p className='text-lg mb-4'>
         Welcome to JournalPro, your personal journaling companion. Our mission

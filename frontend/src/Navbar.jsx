@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
+
 export default function Navbar() {
   const DiamondIcon = () => (
     <svg
@@ -21,31 +21,33 @@ export default function Navbar() {
       />
     </svg>
   );
+
   const navigate = useNavigate();
   const user = localStorage.getItem('user');
 
   const handleLogout = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    try {
+      await axios.post(
+        "http://localhost:3002/auth/logout",
+        {},
+        { withCredentials: true }
+      );
+    } catch (err) {
+      console.log("Logout request failed:", err);
+    } finally {
+      localStorage.removeItem("user");
+      navigate("/login");
+    }
+  };
 
-  try {
-    await axios.post(
-      "http://localhost:3002/auth/logout",
-      {}, // empty body
-      { withCredentials: true } // important: sends cookies
-    );
-  } catch (err) {
-    console.log("Logout request failed:", err);
-  } finally {
-    // clear localStorage anyway
-    localStorage.removeItem("user");
-    navigate("/login");
-  }
-};
   return (
     <div>
       {/* Navbar */}
-
-      <nav className='navbar navbar-expand-lg bg-light'>
+      <nav
+        className='navbar navbar-expand-lg shadow-sm'
+        style={{ backgroundColor: 'rgba(248, 249, 250, 0.9)' }} // light dimmed
+      >
         <div className='container-fluid'>
           <Link
             to='/'
@@ -95,12 +97,12 @@ export default function Navbar() {
                 </li>
               )}
               <li className='nav-item'>
-                  <Link
-                    to='/dashboard'
-                    className='nav-link text-secondary fw-medium'>
-                    Dashboard
-                  </Link>
-                </li>
+                <Link
+                  to='/dashboard'
+                  className='nav-link text-secondary fw-medium'>
+                  Dashboard
+                </Link>
+              </li>
             </ul>
             <Link to='/journal' className='btn btn-primary ms-3'>
               Start My Journal
@@ -108,6 +110,7 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+      <hr className='m-0' /> {/* horizontal line under navbar */}
     </div>
   );
 }

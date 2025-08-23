@@ -9,8 +9,8 @@ import { Link } from 'react-router';
 
 export default function Footer() {
   return (
-    <div className="mt-4">
-      <footer className='container text-center py-4 mt-auto text-secondary'>
+    <div className="mt-4 bg-dark text-light py-4 d-flex" >
+      <footer className='container text-center py-4 mt-auto text-secondary flex-fil'>
         <div className='d-flex justify-content-center gap-4 mb-3'>
           <Link to='/terms' className='text-decoration-none text-secondary'>
             Terms of Service
