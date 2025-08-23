@@ -1,7 +1,9 @@
 /** @format */
 
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
 export default function Navbar() {
   const DiamondIcon = () => (
     <svg
@@ -19,7 +21,26 @@ export default function Navbar() {
       />
     </svg>
   );
+  const navigate = useNavigate();
+  const user = localStorage.getItem('user');
 
+  const handleLogout = async (e) => {
+  e.preventDefault();
+
+  try {
+    await axios.post(
+      "http://localhost:3002/auth/logout",
+      {}, // empty body
+      { withCredentials: true } // important: sends cookies
+    );
+  } catch (err) {
+    console.log("Logout request failed:", err);
+  } finally {
+    // clear localStorage anyway
+    localStorage.removeItem("user");
+    navigate("/login");
+  }
+};
   return (
     <div>
       {/* Navbar */}
@@ -55,13 +76,24 @@ export default function Navbar() {
                   About
                 </Link>
               </li>
-              <li className='nav-item'>
-                <Link
-                  to='/pricing'
-                  className='nav-link text-secondary fw-medium'>
-                  Pricing
-                </Link>
-              </li>
+              {user ? (
+                <li className='nav-item'>
+                  <a
+                    href='/logout'
+                    onClick={handleLogout}
+                    className='nav-link text-danger fw-medium'>
+                    Logout
+                  </a>
+                </li>
+              ) : (
+                <li className='nav-item'>
+                  <Link
+                    to='/login'
+                    className='nav-link text-secondary fw-medium'>
+                    Login
+                  </Link>
+                </li>
+              )}
             </ul>
             <Link to='/journal' className='btn btn-primary ms-3'>
               Start My Journal

@@ -7,11 +7,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './components/Home';
 import About from './components/About';
-import Pricing from './components/Pricing';
+import Signup from './components/Signup';
 import Journal from './components/Journal';
 import Contact from './components/Contact';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import Login from './components/Login';
 import './App.css';
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
-        <Route path='/pricing' element={<Pricing />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/journal' element={<Journal />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>

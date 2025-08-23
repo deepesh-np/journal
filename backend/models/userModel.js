@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema(
       resume: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Resume',
+        default: null
       },
     },
   },

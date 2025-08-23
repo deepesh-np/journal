@@ -33,6 +33,9 @@ module.exports.setJournal = async (req, res) => {
   }
 };
 
+module.exports.updateJournal = async(req,res) => {
+    
+}
 
 // // Update journal (only owner)
 // router.put("/:id", userVerification, attachUser, async (req, res) => {
