@@ -18,7 +18,7 @@ export default function Footer() {
           <Link to='/privacy' className='text-decoration-none text-secondary'>
             Privacy Policy
           </Link>
-          <Link to='/contact' className='text-decoration-none text-secondary'>
+          <Link to='/contactus' className='text-decoration-none text-secondary'>
             Contact Us
           </Link>
         </div>

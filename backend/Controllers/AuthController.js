@@ -17,8 +17,9 @@ module.exports.Signup = async (req, res, next) => {
     const user = await User.create({ name, email, password, role, profile });
     const token = createSecretToken(user._id);
     res.cookie('token', token, {
-      withCredentials: true,
       httpOnly: true,
+      sameSite: 'lax', // allows cross-origin localhost requests
+      secure: false,
     });
     res
       .status(201)
@@ -44,8 +45,9 @@ module.exports.Login = async (req, res, next) => {
     }
     const token = createSecretToken(user._id);
     res.cookie('token', token, {
-      withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
+      sameSite: 'lax', // allows cross-origin localhost requests
+      secure: false,
     });
     res
       .status(201)

@@ -1,10 +1,32 @@
+/** @format */
 
-import React from 'react'
-
+import { useEffect, useState } from 'react';
+import Dashboard from './Dashboard';
+import axios from 'axios';
+import JournalTable from './JournalTbale';
 export default function Journal() {
+  const [journals, setJournals] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('http://localhost:3002/journals', {
+          withCredentials: true,
+        });
+        console.log(res.data);
+        setJournals(res.data);
+      } catch (e) {
+        console.error('Error fetching journals:', e);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <h1>Journal</h1>
+      <JournalTable journals={journals} />
+      <Dashboard />
     </div>
-  )
+  );
 }

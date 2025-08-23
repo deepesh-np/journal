@@ -94,6 +94,13 @@ export default function Navbar() {
                   </Link>
                 </li>
               )}
+              <li className='nav-item'>
+                  <Link
+                    to='/dashboard'
+                    className='nav-link text-secondary fw-medium'>
+                    Dashboard
+                  </Link>
+                </li>
             </ul>
             <Link to='/journal' className='btn btn-primary ms-3'>
               Start My Journal
