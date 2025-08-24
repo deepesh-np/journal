@@ -46,7 +46,48 @@ const path = require('path');
 
 app.get('/', (req, res) => {
   // res.send('hello');
-  res.redirect('http://localhost:5173/');
+  res.redirect('http://localhost:5174/');
+});
+const Resume = require('./models/resumeModel');
+const { getResumeTextFromURL } = require('./resumeParser');
+const { analyzeResume } = require('./hfClient');
+const { attachUser } = require('./middleware/journals');
+
+app.post("/resume/analyze",userVerification, attachUser, async (req, res) => {
+  const { fileUrl } = req.body;
+  const userId = req.userId;
+
+  let resumeDoc = await Resume.create({ userId, fileUrl });
+
+  try {
+    const text = await getResumeTextFromURL(fileUrl);
+    const parsedData = await analyzeResume(text);
+
+    resumeDoc = await Resume.findByIdAndUpdate(
+      resumeDoc._id,
+      { parsedData, rawText: text, status: "analyzed" },
+      { new: true }
+    );
+
+    res.json(resumeDoc);
+  } catch (err) {
+    await Resume.findByIdAndUpdate(resumeDoc._id, { status: "failed", errorLog: err.message });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+const User = require("./models/userModel");
+
+app.get("/profile",userVerification, attachUser, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId)
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 app.listen(PORT, () => {

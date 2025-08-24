@@ -29,15 +29,15 @@ export default function Navbar() {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3002/auth/logout",
+        'http://localhost:3002/auth/logout',
         {},
         { withCredentials: true }
       );
     } catch (err) {
-      console.log("Logout request failed:", err);
+      console.log('Logout request failed:', err);
     } finally {
-      localStorage.removeItem("user");
-      navigate("/login");
+      localStorage.removeItem('user');
+      navigate('/login');
     }
   };
 
@@ -104,9 +104,13 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-            <Link to='/journal' className='btn btn-primary ms-3'>
-              Start My Journal
-            </Link>
+            {user ? (
+              <Link to='/profile' className='btn btn-primary ms-3'>
+                My Profile
+              </Link>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </nav>

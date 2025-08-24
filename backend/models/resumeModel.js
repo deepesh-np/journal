@@ -3,47 +3,38 @@
 const mongoose = require('mongoose');
 
 const ResumeSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  fileUrl: {
-    type: String,
-    required: true,
-  },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  fileUrl: { type: String, required: true },
+  rawText: { type: String },
   parsedData: {
-    name: { type: String },
-    email: { type: String },
-    phone: { type: String },
-    education: [
-      {
-        degree: { type: String },
-        institution: { type: String },
-        year: { type: Number },
-      },
-    ],
+    name: String,
+    email: String,
+    phone: String,
+    education: [{ degree: String, institution: String, year: Number }],
     experience: [
       {
-        company: { type: String },
-        role: { type: String },
-        duration: { type: String },
-        achievements: [{ type: String }],
+        company: String,
+        role: String,
+        duration: String,
+        achievements: [String],
       },
     ],
-    skills: [{ type: String }],
-    projects: [{ type: String }],
+    skills: [String],
+    projects: [String],
   },
   analysisReport: {
     score: { type: Number, default: 0 },
-    missingSkills: [{ type: String }],
+    missingSkills: [String],
     atsCompatibility: { type: Number, default: 0 },
-    recommendations: [{ type: String }],
+    recommendations: [String],
   },
-  uploadedAt: {
-    type: Date,
-    default: Date.now,
+  status: {
+    type: String,
+    enum: ['uploaded', 'parsed', 'analyzed', 'failed'],
+    default: 'uploaded',
   },
+  errorLog: { type: String },
+  uploadedAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Resume', ResumeSchema);

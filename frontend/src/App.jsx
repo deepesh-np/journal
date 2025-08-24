@@ -19,6 +19,8 @@ import Dashboard from './components/Dashboard';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Contact from './components/ContactUs';
+import ResumeForm from './components/ResumeForm';
+import ProfilePage from './components/ProfilePage';
 import './App.css';
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/terms' element={<Terms />} />
         <Route path='/contactus' element={<Contact />} />
+        <Route path='/resume' element={<ResumeForm />} />
+        <Route path='/profile' element={<ProfilePage/>} />
       </Routes>
       <Footer />
     </Router>
