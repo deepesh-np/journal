@@ -32,7 +32,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ['http://localhost:5174'],
+    origin: ['http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
@@ -45,8 +45,8 @@ app.use('/journals', userVerification, journalRoute);
 const path = require('path');
 
 app.get('/', (req, res) => {
-  // res.send('hello');
-  res.redirect('http://localhost:5174/');
+  res.send('hello');
+ 
 });
 const Resume = require('./models/resumeModel');
 const { getResumeTextFromURL } = require('./resumeParser');

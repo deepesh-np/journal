@@ -96,6 +96,7 @@ export default function Navbar() {
                   </Link>
                 </li>
               )}
+               {user ? (
               <li className='nav-item'>
                 <Link
                   to='/dashboard'
@@ -103,10 +104,18 @@ export default function Navbar() {
                   Dashboard
                 </Link>
               </li>
+               ):('')}
             </ul>
             {user ? (
               <Link to='/profile' className='btn btn-primary ms-3'>
                 My Profile
+              </Link>
+            ) : (
+              ''
+            )}
+             {user ? (
+              <Link to='/resume' className='btn btn-primary ms-3'>
+                Add resume
               </Link>
             ) : (
               ''
